@@ -1,6 +1,6 @@
 'use strict';
 
-var Clicks = require('../models/clicks.js');
+var Users = require('../models/users.js');
 
 function ClickHandler(){
 
@@ -9,47 +9,38 @@ function ClickHandler(){
 		//we don't want the 'id' field to show up in our results 
 		//equals to {'_id' : 0}
 
-		Clicks.findOne({}, {'_id' : false}).exec(function(err, result){
+		Users
+		.findOne({'github.id':req.user.github.id}, {'_id' : false})
+		.exec(function(err, result){
 			if(err)
 				throw err;
 
-			if(result){
-				res.json(result);
-			}else{
-				//creates a new document using the parameters defined within the Click model
-				var newDoc = new Clicks({'clicks' : 0});
-				//This method simply saves the current document to the database.
-				newDoc.save(function(err, doc){
-					if(err) 
-						throw err;
-					res.json(doc);
-				});
-			}
+			res.json(result.nbrClicks);
 		});
 	};
 
 	this.addClick = function(req, res){
-		Clicks.findOneAndUpdate(
-			{},
+		Users.findOneAndUpdate(
+			{'github.id':req.user.github.id},
 			// Mongo $inc method
-			{$inc : {'clicks' : 1}})
+			{$inc : {'nbrClicks.clicks' : 1}})
 			.exec(function(err, result){
 				if(err)
 					throw err;
 
-				res.json(result);
+				res.json(result.nbrClicks);
 			}
 		);
 	};
 
 	this.resetClicks = function(req, res){
-		Clicks.findOneAndUpdate(
-			{},
-			{'clicks' : 0})
+		Users.findOneAndUpdate(
+			{'github.id':req.user.github.id},
+			{'nbrClicks.clicks' : 0})
 			.exec(function(err, result){
 				if(err) throw err;
 
-				res.json(result);
+				res.json(result.nbrClicks);
 			}
 		);
 	};
