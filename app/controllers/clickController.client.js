@@ -14,17 +14,22 @@ other variables within the application that may share the same name or need to b
 	.controller('clickController', 
 		['$scope', '$resource', function($scope, $resource){
 		
+		//This new $resource object allows us to query this API, 
+		//and will return the results to a field in the browser.
 		var Click = $resource('/api/clicks');
 
+		//bind the getClicks method to $scope
 		$scope.getClicks = function(){
 			/*
 			 This can then be either manipulated in some way before passing it on to 
 			 he browser, or (as in our case) just pass it straight in to a variable on 
 			 the $scope. 
 			*/
+
+			//Click.get() will make an HTTP GET request to the API and return all of the results.
 			Click.get(function(results){
 				$scope.clicks = results.clicks;
-			})
+			});
 		}
 
 		$scope.getClicks();
@@ -37,22 +42,21 @@ other variables within the application that may share the same name or need to b
 		therefore forcing the $scope.clicks variable to update and represent 
 		the new number of clicks.
 		*/
+
+		//prompt an HTTP POST request
 		$scope.addClick = function(){
 			Click.save(function(){
 				$scope.getClicks();
-			})
+			});
 		};
 		
 		//HTTP DELETE request
 		$scope.resetClicks = function(){
 			Click.remove(function(){
 				$scope.getClicks();
-			})
+			});
 		};
 
 	}]);
-
-
-
 
 })();

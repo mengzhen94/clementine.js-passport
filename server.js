@@ -4,7 +4,7 @@ var express = require("express"),
 	mongoose = require("mongoose");
 
 var app = express();
-
+mongoose.Promise = global.Promise;
 mongoose.connect('mongodb://localhost:27017/clementinejs');
 
 app.use('/public', express.static(process.cwd() + '/public'));
