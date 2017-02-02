@@ -21,6 +21,7 @@ function ClickHandler(){
 
 	this.addClick = function(req, res){
 		Users.findOneAndUpdate(
+			////user will be assigned to req.user.
 			{'github.id':req.user.github.id},
 			// Mongo $inc method
 			{$inc : {'nbrClicks.clicks' : 1}})
