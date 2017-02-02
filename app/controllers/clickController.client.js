@@ -16,7 +16,7 @@ other variables within the application that may share the same name or need to b
 		
 		//This new $resource object allows us to query this API, 
 		//and will return the results to a field in the browser.
-		var Click = $resource('/api/clicks');
+		var Click = $resource('/api/:id/clicks');
 
 		//bind the getClicks method to $scope
 		$scope.getClicks = function(){
