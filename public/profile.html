@@ -9,10 +9,10 @@
 	<div class="container" ng-controller="profileController">
 		<div class="github-profile">
 			<img src="/public/img/gh-mark-32px.png" alt="github logo"/>
-			<p><span>ID: </span><span id="profile-id" class="profile-value">{{profileId}}</span></p>
-			<p><span>Username: </span><span id="profile-username" class="profile-value">{{profileUsername}}</span></p>
-			<p><span>Display Name: </span><span id="display-name" class="profile-value">{{displayName}}</span></p>
-			<p><span>Repositories: </span><span id="profile-repos" class="profile-value">{{profileRepos}}</span></p>
+			<p><span>ID: </span><span ng-cloak id="profile-id" class="profile-value">{{profileId}}</span></p>
+			<p><span>Username: </span><span ng-cloak id="profile-username" class="profile-value">{{profileUsername}}</span></p>
+			<p><span>Display Name: </span><span ng-cloak id="display-name" class="profile-value">{{displayName}}</span></p>
+			<p><span>Repositories: </span><span ng-cloak id="profile-repos" class="profile-value">{{profileRepos}}</span></p>
 			<a class="menu" href="/">Home</a>
 			<p id="menu-divide">|</p>
 			<a class="menu" href="/logout">Logout</a>
