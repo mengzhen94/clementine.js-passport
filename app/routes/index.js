@@ -38,21 +38,23 @@ module.exports = function(app, passport){
 	});
 
 	app.route('/profile').get(isLoggedIn, function(req, res){
-		res.sendFile(path + 'public/profile.html');
+		res.sendFile(path + '/public/profile.html');
 	});
 
 	// This is the object which contains all the relevant user information, 
 	//and we will query this from the front end later for the profile page.
-	app.route('/api/:id').get(isLoggedIn, function(req, res){
+	app.route('/api/:id')
+	.get(isLoggedIn, function(req, res){
 		res.json(req.user.github);
 	});
 
-	app.route('/auth/github').get(passport.authenticate('github'));
+	app.route('/auth/github')
+		.get(passport.authenticate('github'));
 
 	app.route('/auth/github/callback')
-		.get(passport.authenticate('github',{
-			successRedirect:'/',
-			failureRedirect:'/login'
+		.get(passport.authenticate('github', {
+			successRedirect: '/',
+			failureRedirect: '/login'
 		}));
 
 	/*

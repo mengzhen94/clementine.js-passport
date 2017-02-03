@@ -1,5 +1,13 @@
 'use strict';
+/*
+The GitHub API :
 
+id: The numeric ID associated with the GitHub account.
+displayName: The full name (i.e. first and last) for the GitHub account.
+username: The GitHub username for the account
+public_repos: The number of public repositories associated with the GitHub account
+
+*/
 /*
 immediately invoked function express (IIFE)
 An IIFE is going to bind all the variables within to the local scope of that function. 
@@ -10,16 +18,21 @@ other variables within the application that may share the same name or need to b
 (function(){
 	//Integrating the API into AngularJS
 	angular
-	.module('clementineApp', ['ngResource'])
-	.controller('clickController', 
+	.module('profileApp', ['ngResource'])
+	.controller('profileController', 
 		['$scope', '$resource', function($scope, $resource){
 		
 		//This new $resource object allows us to query this API, 
 		//and will return the results to a field in the browser.
-		var Click = $resource('/api/17734819/clicks');
+		var Profile = $resource("/api/:id", {id: "@id"},
+			{enter : {
+                                      method: "GET", 
+                                      isArray: false
+                                     }
+                            });
 
 		//bind the getClicks method to $scope
-		$scope.getClicks = function(){
+		$scope.getProfile = function(){
 			/*
 			 This can then be either manipulated in some way before passing it on to 
 			 he browser, or (as in our case) just pass it straight in to a variable on 
@@ -27,12 +40,19 @@ other variables within the application that may share the same name or need to b
 			*/
 
 			//Click.get() will make an HTTP GET request to the API and return all of the results.
-			Click.get(function(results){
-				$scope.clicks = results.clicks;
+			Profile.get(function(results){
+				//$scope.clicks = results.clicks;
+				//console.log(results);
+				$scope.profileId = results.id;
+				$scope.profileUsername = results.username;
+				$scope.displayName = results.displayName;
+				$scope.profileRepos = results.publicRepos;
+
+
 			});
 		}
 
-		$scope.getClicks();
+		$scope.getProfile();
 
 		/*
 		For addClick, we're instructing Angular to use $resource.save, which will 
@@ -42,7 +62,7 @@ other variables within the application that may share the same name or need to b
 		therefore forcing the $scope.clicks variable to update and represent 
 		the new number of clicks.
 		*/
-
+/*
 		//prompt an HTTP POST request
 		$scope.addClick = function(){
 			Click.save(function(){
@@ -56,7 +76,7 @@ other variables within the application that may share the same name or need to b
 				$scope.getClicks();
 			});
 		};
-
+*/
 	}]);
 
 })();

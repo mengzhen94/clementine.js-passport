@@ -24,7 +24,7 @@ module.exports = function(passport){
 	 The information is stored in the req.session.passport.user user object.
 	*/
 	passport.serializeUser(function(user, done){
-		done(null, user, id);
+		done(null, user.id);
 	});
 	passport.deserializeUser(function(id, done){
 		User.findById(id, function(err, user){
