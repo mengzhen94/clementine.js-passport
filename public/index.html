@@ -7,7 +7,7 @@
 </head>
 
 <header ng-controller="clickController">
-	<p>Welcome, <span id="display-name">{{displayName}}</span>!</p>
+	<p>Welcome, <span ng-cloak id="display-name">{{displayName}}</span>!</p>
 	<a class="menu" href="/profile">Profile</a>
 	<p id="menu-divide">|</p>
 	<a class="menu" href="/logout">Logout</a>
